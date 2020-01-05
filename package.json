@@ -1,0 +1,141 @@
+{
+  "name": "wonderful-angular-id",
+  "displayName": "Wonderful Angular ID",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "publisher": "rebornix",
+  "activationEvents": [
+    "onView:nodeDependencies"
+  ],
+  "main": "./build/ext-src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "react-webview.start",
+        "title": "Start React Webview",
+        "category": "React"
+      },
+      {
+        "command": "nodeDependencies.refreshEntry",
+        "title": "Refresh",
+        "icon": {
+          "light": "resources/light/refresh.svg",
+          "dark": "resources/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "nodeDependencies.addEntry",
+        "title": "Add"
+      },
+      {
+        "command": "nodeDependencies.editEntry",
+        "title": "Edit",
+        "icon": {
+          "light": "resources/light/edit.svg",
+          "dark": "resources/dark/edit.svg"
+        }
+      },
+      {
+        "command": "nodeDependencies.deleteEntry",
+        "title": "Delete"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "nodeDependencies.refreshEntry",
+          "when": "view == nodeDependencies",
+          "group": "navigation"
+        },
+        {
+          "command": "nodeDependencies.addEntry",
+          "when": "view == nodeDependencies"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "nodeDependencies.editEntry",
+          "when": "view == nodeDependencies && viewItem == dependency",
+          "group": "inline"
+        },
+        {
+          "command": "nodeDependencies.deleteEntry",
+          "when": "view == nodeDependencies && viewItem == dependency"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "package-explorer",
+          "title": "Angular HTML Explorer",
+          "icon": "media/coding.svg"
+        }
+      ]
+    },
+    "views": {
+      "package-explorer": [
+        {
+          "id": "nodeDependencies",
+          "name": "Node Dependencies"
+        }
+      ]
+    }
+  },
+  "resolutions": {
+    "terser": "3.14.1`"
+  },
+  "scripts": {
+    "vscode:prepublish": "./scripts/build-non-split.js && tsc -p tsconfig.extension.json",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "start": "react-scripts start",
+    "build": "./scripts/build-non-split.js && tsc -p tsconfig.extension.json",
+    "build:extenstion": "tsc -p tsconfig.extension.json",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.8.2",
+    "@types/jquery": "^3.3.31",
+    "@types/sass": "^1.16.0",
+    "bootstrap": "^4.4.1",
+    "html-to-react": "^1.4.2",
+    "jquery": "^3.4.1",
+    "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.16",
+    "react-dom": "^16.12.0",
+    "react-render-html": "^0.6.0",
+    "react-splitter-layout": "^4.0.0",
+    "sass": "^1.24.2",
+    "terser": "3.16.0",
+    "vscode": "^1.1.36"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-splitter-layout": "^3.0.0",
+    "react-scripts": "3.3.0",
+    "rewire": "^4.0.1",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-react": "^4.1.0",
+    "typescript": "^3.7.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
