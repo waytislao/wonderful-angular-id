@@ -13,7 +13,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-
+import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
+import CardContent from '@material-ui/core/CardContent';
 import HtmlToReact from 'html-to-react';
 const htmlToReactParser = new HtmlToReact.Parser();
 
@@ -37,6 +39,9 @@ class App extends React.Component<{}, {
   selected: number
 }> {
   private myRef: React.RefObject<HTMLDivElement>;
+  private elements: any[] = [];
+  private IDValues: any[] = [];
+  private IDValuesElementType: any[] = [];
 
   constructor(props: any) {
     super(props);
@@ -81,23 +86,38 @@ class App extends React.Component<{}, {
           </div>
           <ThemeProvider theme={darkTheme}>
             <div className="id-panel">
-              <FormControl>
-                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-              </FormControl>
-              <FormControl variant="outlined" >
-                <InputLabel id="demo-customized-select-label">Age</InputLabel>
-                <Select
-                  labelId="demo-customized-select-label"
-                  id="demo-customized-select"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
+
+              {this.IDValues.map((IDItem, key) =>
+                <div key={key}>
+                  <Card>
+                    <CardContent>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <FormControl>
+                            <TextField fullWidth={true} size="small" id="outlined-basic" label="Outlined" variant="outlined" value={IDItem} />
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <FormControl variant="outlined" size="small">
+                            <InputLabel id="demo-customized-select-label">Age</InputLabel>
+                            <Select fullWidth={true}
+                              labelId="demo-customized-select-label"
+                              id="demo-customized-select"
+                            >
+                              <MenuItem value="">
+                                <em>None</em>
+                              </MenuItem>
+                              <MenuItem value={10}>Ten</MenuItem>
+                              <MenuItem value={20}>Twenty</MenuItem>
+                              <MenuItem value={30}>Thirty</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </div>)}
+
             </div>
           </ThemeProvider>
         </SplitterLayout>
@@ -106,19 +126,19 @@ class App extends React.Component<{}, {
   }
 
   private applyIDSelector() {
-    const elements: any[] = [];
-    const IDValues: any[] = [];
-    const IDValuesElementType: any[] = [];
+    this.elements = [];
+    this.IDValues = [];
+    this.IDValuesElementType = [];
 
     if (this.myRef.current) {
       this.myRef.current.querySelectorAll('input,h1,h2,h3,h4,h5,.content-header-title,button,a,small')
         .forEach((el, index) => {
-          elements.push(el);
+          this.elements.push(el);
           const $elRef = $(el);
-          IDValues.push($elRef.attr('id'));
-          IDValuesElementType.push('input');
+          this.IDValues.push($elRef.attr('id'));
+          this.IDValuesElementType.push('input');
 
-          const $warpRef = $(`<div id="need-id-warp-${index}" class='need-id-element ${!!IDValues[index] ? 'exist-id' : ''}' style="display: ${$elRef.css('display')};"
+          const $warpRef = $(`<div id="need-id-warp-${index}" class='need-id-element ${!!this.IDValues[index] ? 'exist-id' : ''}' style="display: ${$elRef.css('display')};"
   data-toggle="popover" ></div>`).on('click', () => {
             $(`#need-id-input-${index}`).focus();
             this.setState({ selected: index });
